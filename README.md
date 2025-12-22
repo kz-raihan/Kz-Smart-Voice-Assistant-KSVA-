@@ -94,8 +94,8 @@ KSVA provides a set of practical and interactive voice-driven capabilities desig
 
 ## 👤 Author
 
-**KzRaihan**
-Engineering Student | AI & Data Science Enthusiast
+Md Kamruzzaman
+Computer Science Engineer | AI & Data Science Enthusiast
 
 Inspired by **Boktiar Ahmed Bappy** and Tony Stark's JARVIS
 
