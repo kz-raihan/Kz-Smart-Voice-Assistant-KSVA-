@@ -1,6 +1,9 @@
 import speech_recognition as sr  # My assistence can speech
+
 import pyttsx3  # activate the voice of my assistence
+
 import logging # To capture the problem or othes my assistence
+
 import os # to handle the operating system (define the path )
 
 import datetime # KSVA can said time and date
@@ -13,9 +16,13 @@ import random  # KSVA is randomly play music
 
 import subprocess # KSVA is also open calculate, notepad, cmd others subprocess tasks
 
+import google.generativeai as genai # for casual conversation
+
+
 
 # Logging configuration 
 LOG_DIR = "logs" # Folder name
+
 LOG_FILE_NAME = "application.log" # log file name
 
 os.makedirs(LOG_DIR, exist_ok=True) # here, create a folder or directory
@@ -137,6 +144,25 @@ def play_music():
         speak("Sorry sir, I could not find your music folder.")
 
 
+# genai model 
+
+def genai_model_respone(user_input):
+    # api key
+    GEMINI_API_KEY = ""
+    genai.configure(api_key= GEMINI_API_KEY) 
+    
+    # model selection
+    model = genai.GenerativeModel('gemini-2.5-flash')
+
+    prompt = f"Your name is Kz, you act like Kz. Answer the provided question in short, Question: {user_input}"
+
+    respone = model.generate_content(prompt)
+
+    result = respone.text
+    
+    return result
+    
+
 
 # calling the greeting function(because greeting is only once time)
 greeting()
@@ -152,7 +178,7 @@ while True:
 
     # when asked the name
     if "name" in query:
-        speak("My name is KzRaihan")
+        speak("My name is Kz")
         logging.info("user asked for assistant's name")
         
     # when asked the time
@@ -200,8 +226,8 @@ while True:
         logging.info("User requested to open Command Prompt.")
         
     # open google Calender
-    elif "open calender" in query or "calender" in query:
-        speak("Opening windows calender")
+    elif "open calendar" in query or "calendar" in query:
+        speak("Opening windows calendar")
         webbrowser.open("https://calender.google.com")  
         logging.info("User requested to open Calendar.")     
         
@@ -255,8 +281,9 @@ while True:
         exit()
     
     else:
-        speak("I am sorry, I can't help you with that.")
-        logging.info("User asked for an unsupported command")
+        respone = genai_model_respone(query)
+        speak(respone)
+        logging.info("User asked for casual conversation")
        
     
     
